@@ -293,11 +293,11 @@ Initialize the application by running the `init` command within a container
 
 Add a database service like and adjust the components['db'] configuration in `common/config/main-local.php` accordingly.
     
-        'dsn' => 'mysql:host=mysql;dbname=yii2advanced',
+        'dsn' => 'mysql:host=local-mysql;dbname=yii2advanced',
         'username' => 'yii2advanced',
         'password' => 'secret',
 
-> Docker networking creates a DNS entry for the host `mysql` available from your `backend` and `frontend` containers.
+> Docker networking creates a DNS entry for the host `local-mysql` available from your `backend` and `frontend` containers.
 
 > If you want to use another database, such a Postgres, uncomment the corresponding section in `docker-compose.yml` and update your database connection.
 

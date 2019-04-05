@@ -4,6 +4,9 @@ services:
 
   frontend:
     build: phpApache/frontend
+    depends_on: 
+      - mysql
+      - mysql-test
     ports:
       - 20080:80
     volumes:
@@ -14,6 +17,9 @@ services:
 
   backend:
     build: phpApache/backend
+    depends_on: 
+      - mysql
+      - mysql-test
     ports:
       - 21080:80
     volumes:
@@ -24,11 +30,21 @@ services:
 
   mysql:
     image: mysql:5.7
+    container_name: local-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=verysecret
       - MYSQL_DATABASE=yii2advanced
       - MYSQL_USER=yii2advanced
       - MYSQL_PASSWORD=secret
+
+  mysql-test:
+    image: mysql:5.7
+    container_name: test-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=verysecret
+      - MYSQL_DATABASE=yii2advanced_test
+      - MYSQL_USER=yii2advanced
+      - MYSQL_PASSWORD=secret      
 
   #pgsql:
   #  image: postgres:9.5
@@ -38,10 +54,11 @@ services:
   #    - POSTGRES_PASSWORD=secret
 
   codecept:
-    image: codeception/codeception:2.5.0
+    build: codeception
     depends_on:
       - chrome
       - firefox
+      - mysql-test
     volumes:
       - ./../:/project
             
@@ -53,6 +70,8 @@ services:
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
+
+
   firefox:
     image: 'selenium/standalone-firefox-debug:2.53.1'
     ports:

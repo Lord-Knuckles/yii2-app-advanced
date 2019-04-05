@@ -293,7 +293,7 @@ Bower と NPM の依存パッケージを Composer によって管理するた�
 
 好みのデータベース・サービスを追加して、それに合せて `common/config/main-local.php` の 'db' コンポーネントの構成を修正します。
     
-        'dsn' => 'mysql:host=mysql;dbname=yii2advanced',
+        'dsn' => 'mysql:host=local-mysql;dbname=yii2advanced',
         'username' => 'yii2advanced',
         'password' => 'secret',
 
