@@ -22,3 +22,4 @@ RUN docker-php-ext-install gd
 
 RUN docker-php-ext-install pdo_mysql 
 
+USER 1000

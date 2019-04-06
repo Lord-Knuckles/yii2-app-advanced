@@ -14,6 +14,8 @@ services:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
       - ./../:/app
+    networks:
+      - dev-env-yii2
 
   backend:
     build: phpApache/backend
@@ -27,8 +29,10 @@ services:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
       - ./../:/app
+    networks:
+      - dev-env-yii2
 
-  mysql:
+  mysql:    
     image: mysql:5.7
     container_name: local-mysql
     environment:
@@ -36,15 +40,19 @@ services:
       - MYSQL_DATABASE=yii2advanced
       - MYSQL_USER=yii2advanced
       - MYSQL_PASSWORD=secret
+    networks:
+      - dev-env-yii2
 
   mysql-test:
-    image: mysql:5.7
+    build: mySql
     container_name: test-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=verysecret
       - MYSQL_DATABASE=yii2advanced_test
       - MYSQL_USER=yii2advanced
-      - MYSQL_PASSWORD=secret      
+      - MYSQL_PASSWORD=secret
+    networks:
+      - dev-env-yii2      
 
   #pgsql:
   #  image: postgres:9.5
@@ -54,13 +62,11 @@ services:
   #    - POSTGRES_PASSWORD=secret
 
   codecept:
-    build: codeception
-    depends_on:
-      - chrome
-      - firefox
-      - mysql-test
+    build: codeception   
     volumes:
       - ./../:/project
+    networks:
+      - dev-env-yii2
             
   chrome:
     image: 'selenium/standalone-chrome-debug:2.53.1'
@@ -70,7 +76,8 @@ services:
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
-
+    networks:
+      - dev-env-yii2
 
   firefox:
     image: 'selenium/standalone-firefox-debug:2.53.1'
@@ -80,3 +87,9 @@ services:
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
+    networks:
+      - dev-env-yii2
+
+
+networks:
+  dev-env-yii2:

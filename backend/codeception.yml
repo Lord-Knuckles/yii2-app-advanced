@@ -13,3 +13,36 @@ modules:
     config:
         Yii2:
             configFile: 'config/codeception-local.php'
+
+
+groups:
+    paracept_*: tests/_data/parallel-files/paracept_*
+
+env:
+    env1:
+        modules:
+            config:
+                Yii2:
+                    configFile: 'tests/config/functional/test1.php'
+                    entryScript: index-test.php
+                
+    env2:
+        modules:
+            config:
+                Yii2:
+                    configFile: 'tests/config/functional/test2.php'
+                    entryScript: index-test1.php
+               
+    env3:
+        modules:
+            config:
+                Yii2:
+                    configFile: 'tests/config/functional/test3.php'
+                    entryScript: index-test2.php
+               
+    env4:
+        modules:
+            config:
+                Yii2:
+                    configFile: 'tests/config/functional/test4.php'
+                    entryScript: index-test3.php
